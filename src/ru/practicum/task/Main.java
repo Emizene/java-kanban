@@ -1,5 +1,11 @@
 package ru.practicum.task;
 
+import ru.practicum.task.model.Epic;
+import ru.practicum.task.model.Subtask;
+import ru.practicum.task.model.Task;
+import ru.practicum.task.service.Status;
+import ru.practicum.task.service.TaskManager;
+
 public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();

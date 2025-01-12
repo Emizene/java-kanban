@@ -1,10 +1,13 @@
-package ru.practicum.task;
+package ru.practicum.task.model;
+
+import ru.practicum.task.service.Status;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
 
-    private final ArrayList<Subtask> allSubtasks = new ArrayList<>();
+    private final List<Subtask> allSubtasks = new ArrayList<>();
 
     public Epic(String name, String description, Status status) {
         super(name, description, status);
@@ -14,7 +17,7 @@ public class Epic extends Task {
         allSubtasks.add(subtask);
     }
 
-    public ArrayList<Subtask> getAllSubtasks() {
+    public List<Subtask> getAllSubtasks() {
         return allSubtasks;
     }
 

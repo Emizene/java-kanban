@@ -1,13 +1,18 @@
-package ru.practicum.task;
+package ru.practicum.task.service;
+
+import ru.practicum.task.model.Epic;
+import ru.practicum.task.model.Subtask;
+import ru.practicum.task.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TaskManager {
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private int idCounter = 0;
 
     public int generateId() {

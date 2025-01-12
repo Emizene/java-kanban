@@ -1,4 +1,6 @@
-package ru.practicum.task;
+package ru.practicum.task.model;
+
+import ru.practicum.task.service.Status;
 
 import java.util.Objects;
 
@@ -61,7 +63,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "ru.practicum.task.Task{" +
+        return "ru.practicum.task.model.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +

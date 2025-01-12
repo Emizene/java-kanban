@@ -1,4 +1,6 @@
-package ru.practicum.task;
+package ru.practicum.task.model;
+
+import ru.practicum.task.service.Status;
 
 public class Subtask extends Task {
     private final int epicId;

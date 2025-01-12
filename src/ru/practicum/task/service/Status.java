@@ -1,4 +1,4 @@
-package ru.practicum.task;
+package ru.practicum.task.service;
 
 public enum Status {
     NEW,
