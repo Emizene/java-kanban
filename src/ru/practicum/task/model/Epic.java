@@ -1,9 +1,8 @@
 package ru.practicum.task.model;
 
-import ru.practicum.task.service.Status;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Epic extends Task {
 
@@ -11,6 +10,14 @@ public class Epic extends Task {
 
     public Epic(String name, String description, Status status) {
         super(name, description, status);
+    }
+
+    private Epic(int id, String name, String description, Status status) {
+        super(id, name, description, status);
+    }
+
+    public Epic getEpicCopy() {
+        return new Epic(this.getId(), this.getName(), this.getDescription(), this.getStatus());
     }
 
     public void addSubtask(Subtask subtask) {
@@ -21,7 +28,7 @@ public class Epic extends Task {
         return allSubtasks;
     }
 
-    public void clearAllSubtask() {
+    public void clearAllSubtasks() {
         allSubtasks.clear();
     }
 
@@ -48,5 +55,29 @@ public class Epic extends Task {
         } else {
             setStatus(Status.NEW);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(allSubtasks, epic.allSubtasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), allSubtasks);
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() +
+                "{name='" + name +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", id=" + id +
+                '}';
     }
 }

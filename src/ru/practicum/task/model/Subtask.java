@@ -1,6 +1,6 @@
 package ru.practicum.task.model;
 
-import ru.practicum.task.service.Status;
+import java.util.Objects;
 
 public class Subtask extends Task {
     private final int epicId;
@@ -10,8 +10,40 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
+    private Subtask(int id, String name, String description, Status status, int epicId) {
+        super(id, name, description, status);
+        this.epicId = epicId;
+    }
+
+    public Subtask getSubtaskCopy() {
+        return new Subtask(this.getId(), this.getName(), this.getDescription(), this.getStatus(), this. getEpicId());
+    }
+
     public int getEpicId() {
         return epicId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Subtask subtask = (Subtask) o;
+        return epicId == subtask.epicId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), epicId);
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() +
+                "{name='" + name +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", id=" + id +
+                '}';
+    }
 }

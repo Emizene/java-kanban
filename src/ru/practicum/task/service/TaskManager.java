@@ -4,98 +4,47 @@ import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class TaskManager {
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
-    private int idCounter = 0;
+public interface TaskManager {
 
-    public int generateId() {
-        return ++idCounter;
-    }
+    int generateId();
 
-    public void addTask(Task task) {
-        int id = generateId();
-        task.setId(id);
-        tasks.put(id, task);
-    }
+    void addTask(Task task);
 
-    public void addEpic(Epic epic) {
-        int id = generateId();
-        epic.setId(id);
-        epics.put(id, epic);
-    }
+    void addEpic(Epic epic);
 
-    public void addSubtask(Subtask subtask) {
-        int id = generateId();
-        subtask.setId(id);
-        subtasks.put(subtask.getId(), subtask);
-        Epic epic = epics.get(subtask.getEpicId());
-        epic.addSubtask(subtask);
-        epic.updateStatus();
-    }
+    void addSubtask(Subtask subtask);
 
-    public void updateTask(Task task, Task newTask) {
-        tasks.put(task.getId(), newTask);
-    }
+    Task getTaskById(int id);
 
-    public void updateEpic(Epic epic, Epic newEpic) {
-        epics.put(epic.getId(), newEpic);
-        newEpic.updateStatus();
-    }
+    Epic getEpicById(int id);
 
-    public List<Task> getAllTasks() {
-        return new ArrayList<>(tasks.values());
-    }
+    Subtask getSubtaskById(int id);
 
-    public List<Epic> getAllEpics() {
-        return new ArrayList<>(epics.values());
-    }
+    void updateTask(Task task, Task newTask);
 
-    public List<Subtask> getAllSubtasks() {
-        return new ArrayList<>(subtasks.values());
-    }
+    void updateEpic(Epic epic, Epic newEpic);
 
-    public void clearAllTasks() {
-        tasks.clear();
+    List<Task> getAllTasks();
 
-    }
+    List<Epic> getAllEpics();
 
-    public void clearAllEpics() {
-        epics.clear();
+    List<Subtask> getAllSubtasks();
 
-    }
+    void clearAllTasks();
 
-    public void deleteTask(int taskId) {
-        tasks.remove(taskId);
-    }
+    void clearAllEpics();
 
-    public void deleteEpic(int epicId) {
-        epics.remove(epicId);
-    }
+    void deleteTask(int taskId);
 
-    public void deleteSubtask(int subtaskId) {
-        Epic epic = epics.get(subtaskId);
-        epic.getAllSubtasks().remove(subtasks.get(subtaskId));
-        subtasks.remove(subtaskId);
-        epic.updateStatus();
-    }
+    void deleteEpic(int epicId);
 
-    public void updateSubtaskStatus(Subtask subtask, Subtask newSubtask) {
-        newSubtask.setId(subtask.getId());
-        subtasks.remove(subtask.getEpicId());
-        subtasks.put(newSubtask.getId(), newSubtask);
-        Epic epic = epics.get(newSubtask.getEpicId());
-        epic.getAllSubtasks().remove(subtask);
-        epic.addSubtask(newSubtask);
-        epic.updateStatus();
-    }
+    void deleteSubtask(int subtaskId);
+
+    void updateSubtaskStatus(Subtask subtask, Subtask newSubtask);
+
+    List<Task> getHistory();
+
+    void printAllTasks(TaskManager manager);
 }
-
-
-

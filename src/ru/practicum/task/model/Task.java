@@ -1,7 +1,5 @@
 package ru.practicum.task.model;
 
-import ru.practicum.task.service.Status;
-
 import java.util.Objects;
 
 public class Task {
@@ -14,6 +12,17 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(Integer id, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Task getTaskCopy() {
+        return new Task(this.getId(), this.getName(), this.getDescription(), this.getStatus());
     }
 
     public String getName() {
@@ -63,10 +72,10 @@ public class Task {
 
     @Override
     public String toString() {
-        return "ru.practicum.task.model.Task{" +
-                "name='" + name + '\'' +
+        return this.getClass().getSimpleName() +
+                "{name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status +
+                ", status=" + status + '\'' +
                 ", id=" + id +
                 '}';
     }
