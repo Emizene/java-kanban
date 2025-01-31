@@ -84,9 +84,9 @@ class InMemoryTaskManagerTest {
         assertNotNull(history, "История не должна возвращать null");
         assertEquals(1, history.size(), "История должна содержать одну задачу");
         assertEquals(task1, history.getFirst(), "Задача в истории должна соответствовать добавленной");
-        assertEquals("Task 1", history.getFirst().getName(), "Название в истории должно" +
+        assertEquals("TASK №1", history.getFirst().getName(), "Название в истории должно" +
                 " соответствовать исходному");
-        assertEquals("Description 1", history.getFirst().getDescription(), "Описание в истории" +
+        assertEquals("DESCRIPTION №1", history.getFirst().getDescription(), "Описание в истории" +
                 " должно соответствовать исходному");
     }
 

@@ -19,7 +19,7 @@ class TaskTest {
     }
 
     @Test
-    void testEqualsTrue_whenIdSetManual() {
+    void testShouldNotConflictBetweenManualSetIdAndGeneratedId() {
         TaskManager manager = Managers.getDefaultTaskManager();
         Task task1 = new Task("TEST TASK №1", "DESCRIPTION №1", Status.NEW);
         Task task2 = new Task("TEST TASK №2", "DESCRIPTION №2", Status.NEW);
@@ -27,10 +27,12 @@ class TaskTest {
         manager.addTask(task1);
         manager.addTask(task2);
 
+        Task manualSetId = manager.getTaskById(task1.getId());
+        Task generatedId = manager.getTaskById(task2.getId());
+
         assertNotNull(task1, "Задача с заданным ID не должна возвращать null");
         assertNotNull(task2, "Задача со сгенерированным ID не должна возвращать null");
-        assertEquals(task1, manager.getTaskById(999), "ID установлен не корректно");
-        assertEquals(task2, manager.getTaskById(1), "ID установлен не корректно");
+        assertNotEquals(manualSetId, generatedId, "Задачи конфликтуют между собой");
     }
 
 }

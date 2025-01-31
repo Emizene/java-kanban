@@ -170,15 +170,6 @@ class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() +
-                "{Tasks='" + tasks +
-                "Epics=" + epics + '\'' +
-                "SubTask=" + subtasks +
-                '}';
-    }
-
 }
 
 
