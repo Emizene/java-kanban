@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class InMemoryHistoryManager implements HistoryManager{
 
-    private final int MAX_SIZE_HISTORY = 10;
+    private static final int MAX_SIZE_HISTORY = 10;
 
     private final List<Task> historyStorage = new ArrayList<>();
 

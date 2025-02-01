@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Epic extends Task {
 
-    private final List<Subtask> allSubtasks = new ArrayList<>();
+    private final List<Subtask> subtasks = new ArrayList<>();
 
     public Epic(String name, String description, Status status) {
         super(name, description, status);
@@ -21,39 +21,40 @@ public class Epic extends Task {
     }
 
     public void addSubtask(Subtask subtask) {
-        allSubtasks.add(subtask);
+        subtasks.add(subtask);
     }
 
-    public List<Subtask> getAllSubtasks() {
-        return allSubtasks;
+    public List<Subtask> getSubtasks() {
+        return subtasks;
     }
 
     public void clearAllSubtasks() {
-        allSubtasks.clear();
+        subtasks.clear();
     }
 
     public void updateStatus() {
-        if (allSubtasks.isEmpty()) {
+        if (subtasks.isEmpty()) {
             setStatus(Status.NEW);
             return;
         }
         boolean isInProgress = false;
-        boolean isAllDone = false;
+        boolean isNew = false;
 
-        for (Subtask subtask : allSubtasks) {
-            if (subtask.getStatus() == Status.DONE) {
-                isAllDone = true;
-            }
+        for (Subtask subtask : subtasks) {
             if (subtask.getStatus() == Status.IN_PROGRESS) {
                 isInProgress = true;
             }
+            if (subtask.getStatus() == Status.NEW) {
+                isNew = true;
+            }
+
         }
-        if (isAllDone) {
-            setStatus(Status.DONE);
-        } else if (isInProgress) {
+        if (isInProgress) {
             setStatus(Status.IN_PROGRESS);
-        } else {
+        } else if (isNew) {
             setStatus(Status.NEW);
+        } else {
+            setStatus(Status.DONE);
         }
     }
 
@@ -63,12 +64,12 @@ public class Epic extends Task {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Epic epic = (Epic) o;
-        return Objects.equals(allSubtasks, epic.allSubtasks);
+        return Objects.equals(subtasks, epic.subtasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), allSubtasks);
+        return Objects.hash(super.hashCode(), subtasks);
     }
 
     @Override
