@@ -72,13 +72,4 @@ public class Epic extends Task {
         return Objects.hash(super.hashCode(), subtasks);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() +
-                "{name='" + name +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", id=" + id +
-                '}';
-    }
 }

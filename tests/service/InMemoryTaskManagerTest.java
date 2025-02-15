@@ -1,4 +1,4 @@
-package ru.practicum.task.service;
+package service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,13 @@ import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.InMemoryTaskManager;
+import ru.practicum.task.service.TaskManager;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryTaskManagerTest {
 

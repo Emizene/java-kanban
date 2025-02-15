@@ -1,8 +1,11 @@
-package ru.practicum.task.model;
+package model;
 
 import org.junit.jupiter.api.Test;
+import ru.practicum.task.model.Epic;
+import ru.practicum.task.model.Status;
+import ru.practicum.task.model.Subtask;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SubtaskTest {
 
