@@ -68,6 +68,7 @@ public class Main {
         System.out.println();
 
         manager.getTaskById(1);
+        manager.getTaskById(1);
         manager.getTaskById(2);
         manager.getTaskById(7);
         manager.getTaskById(8);

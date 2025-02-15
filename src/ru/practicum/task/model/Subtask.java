@@ -37,13 +37,4 @@ public class Subtask extends Task {
         return Objects.hash(super.hashCode(), epicId);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() +
-                "{name='" + name +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", id=" + id +
-                '}';
-    }
 }

@@ -1,4 +1,4 @@
-package ru.practicum.task.service;
+package service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,13 @@ import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.InMemoryTaskManager;
+import ru.practicum.task.service.TaskManager;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryTaskManagerTest {
 
@@ -88,6 +91,25 @@ class InMemoryTaskManagerTest {
                 " соответствовать исходному");
         assertEquals("DESCRIPTION №1", history.getFirst().getDescription(), "Описание в истории" +
                 " должно соответствовать исходному");
+    }
+
+    @Test
+    void testManagerShouldClearAllTask() {
+        Task task1 = new Task(1, "TASK №1", "DESCRIPTION №1", Status.NEW);
+        Task task2 = new Task(2, "TASK №2", "DESCRIPTION №2", Status.NEW);
+        manager.addTask(task1);
+        manager.addTask(task2);
+
+        manager.getTaskById(task1.getId());
+        manager.getTaskById(task2.getId());
+
+        assertEquals(2, manager.getHistory().size(), "Размер не соответствует действительному");
+        assertEquals(2, manager.getAllTasks().size(), "Размер не соответствует действительному");
+
+        manager.clearAllTasks();
+
+        assertEquals(0, manager.getHistory().size(), "Размер не соответствует действительному");
+        assertEquals(0, manager.getAllTasks().size(), "Размер не соответствует действительному");
     }
 
 }

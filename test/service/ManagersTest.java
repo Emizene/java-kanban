@@ -1,8 +1,11 @@
-package ru.practicum.task.service;
+package service;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.HistoryManager;
+import ru.practicum.task.service.Managers;
+import ru.practicum.task.service.TaskManager;
 
 import java.util.List;
 
@@ -53,7 +56,7 @@ class ManagersTest {
         HistoryManager historyManager = Managers.getDefaultHistoryManager();
 
         Task task1 = new Task("TEST TASK №1", "DESCRIPTION №1", Status.NEW);
-        historyManager.addTaskInHistory(task1);
+        historyManager.addInHistory(task1);
 
         List<Task> history = historyManager.getHistory();
 
