@@ -28,10 +28,6 @@ public class Epic extends Task {
         return subtasks;
     }
 
-    public void clearAllSubtasks() {
-        subtasks.clear();
-    }
-
     public void updateStatus() {
         if (subtasks.isEmpty()) {
             setStatus(Status.NEW);

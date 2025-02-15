@@ -93,4 +93,23 @@ class InMemoryTaskManagerTest {
                 " должно соответствовать исходному");
     }
 
+    @Test
+    void testManagerShouldClearAllTask() {
+        Task task1 = new Task(1, "TASK №1", "DESCRIPTION №1", Status.NEW);
+        Task task2 = new Task(2, "TASK №2", "DESCRIPTION №2", Status.NEW);
+        manager.addTask(task1);
+        manager.addTask(task2);
+
+        manager.getTaskById(task1.getId());
+        manager.getTaskById(task2.getId());
+
+        assertEquals(2, manager.getHistory().size(), "Размер не соответствует действительному");
+        assertEquals(2, manager.getAllTasks().size(), "Размер не соответствует действительному");
+
+        manager.clearAllTasks();
+
+        assertEquals(0, manager.getHistory().size(), "Размер не соответствует действительному");
+        assertEquals(0, manager.getAllTasks().size(), "Размер не соответствует действительному");
+    }
+
 }

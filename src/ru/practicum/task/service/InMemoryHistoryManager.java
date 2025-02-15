@@ -30,7 +30,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public List<Task> getHistory() {
         List<Task> tasks = new ArrayList<>();
         Node currentNode = head;
         while (currentNode != null) {
@@ -38,11 +38,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             currentNode = currentNode.getNext();
         }
         return tasks;
-    }
-
-    @Override
-    public List<Task> getHistory() {
-        return new ArrayList<>(getTasks());
     }
 
     @Override
@@ -79,6 +74,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         linkedMap.remove(node.getTask().getId());
     }
 
+    @Override
+    public void clearAllHistory() {
+        linkedMap.clear();
+        head = null;
+        tail = null;
+    }
 }
 
 

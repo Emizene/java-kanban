@@ -36,6 +36,8 @@ public interface TaskManager {
 
     void clearAllEpics();
 
+    void clearAllSubtasks();
+
     void deleteTask(int taskId);
 
     void deleteEpic(int epicId);
