@@ -1,8 +1,9 @@
-package ru.practicum.task.service;
+package ru.practicum.task.service.manager;
 
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.HistoryManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

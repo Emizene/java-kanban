@@ -6,8 +6,8 @@ import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
-import ru.practicum.task.service.InMemoryTaskManager;
-import ru.practicum.task.service.TaskManager;
+import ru.practicum.task.service.manager.InMemoryTaskManager;
+import ru.practicum.task.service.manager.TaskManager;
 
 import java.util.List;
 

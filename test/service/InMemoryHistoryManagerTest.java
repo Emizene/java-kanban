@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
 import ru.practicum.task.service.*;
-
-import java.util.List;
+import ru.practicum.task.service.manager.Managers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

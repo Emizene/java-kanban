@@ -70,6 +70,10 @@ public class Task {
         return Objects.hash(id);
     }
 
+    public String toFileString() {
+        return String.format("%s,%s,%s,%s,%s\n", id, Type.TASK, name, status, description);
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() +

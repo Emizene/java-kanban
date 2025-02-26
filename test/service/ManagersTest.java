@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
 import ru.practicum.task.service.HistoryManager;
-import ru.practicum.task.service.Managers;
-import ru.practicum.task.service.TaskManager;
+import ru.practicum.task.service.manager.Managers;
+import ru.practicum.task.service.manager.TaskManager;
 
 import java.util.List;
 
