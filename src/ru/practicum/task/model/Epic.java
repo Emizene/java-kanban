@@ -68,4 +68,9 @@ public class Epic extends Task {
         return Objects.hash(super.hashCode(), subtasks);
     }
 
+    @Override
+    public String toFileString() {
+        return String.format("%s,%s,%s,%s,%s\n", id, Type.EPIC, name, status, description);
+    }
+
 }

@@ -37,4 +37,9 @@ public class Subtask extends Task {
         return Objects.hash(super.hashCode(), epicId);
     }
 
+    @Override
+    public String toFileString() {
+        return String.format("%s,%s,%s,%s,%s,%s\n", id, Type.SUBTASK, name, status, description, epicId);
+    }
+
 }
