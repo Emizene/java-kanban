@@ -1,8 +1,6 @@
-package ru.practicum.task.service;
+package ru.practicum.task.service.manager;
 
 import ru.practicum.task.model.*;
-import ru.practicum.task.service.manager.InMemoryTaskManager;
-import ru.practicum.task.service.manager.ManagerSaveException;
 
 import java.io.*;
 
@@ -22,6 +20,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() throws ManagerSaveException {
         try (Writer fileWriter = new FileWriter(file)) {
+            fileWriter.write("id,type,name,status,description,epicId\n");
             for (Task task : getAllTasks()) {
                 fileWriter.write(task.toFileString());
             }
@@ -72,15 +71,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (line.isEmpty()) {
                     return;
                 }
+                if(line.equals("id,type,name,status,description,epicId")) {
+                    continue;
+                }
                 Task task = fromString(line);
-                if (task != null) {
-                    if (task instanceof Subtask) {
-                        subtasks.put(task.getId(), (Subtask) task);
-                    } else if (task instanceof Epic) {
-                        epics.put(task.getId(), (Epic) task);
-                    } else {
-                        tasks.put(task.getId(), task);
-                    }
+                if (task instanceof Subtask) {
+                    subtasks.put(task.getId(), (Subtask) task);
+                } else if (task instanceof Epic) {
+                    epics.put(task.getId(), (Epic) task);
+                } else {
+                    tasks.put(task.getId(), task);
                 }
             }
         } catch (IOException e) {

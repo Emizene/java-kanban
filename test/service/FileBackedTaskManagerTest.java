@@ -3,7 +3,7 @@ package service;
 import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
-import ru.practicum.task.service.FileBackedTaskManager;
+import ru.practicum.task.service.manager.FileBackedTaskManager;
 import ru.practicum.task.service.manager.ManagerSaveException;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
 
-    File temp = File.createTempFile("test", "csv");
+    File temp = File.createTempFile("test", ".csv");
     FileBackedTaskManager manager = new FileBackedTaskManager(temp);
 
     FileBackedTaskManagerTest() throws IOException {
@@ -37,7 +37,6 @@ public class FileBackedTaskManagerTest {
         assertArrayEquals(manager.getAllTasks().toArray(), loadedManager.getAllTasks().toArray());
 
     }
-
 }
 
 
