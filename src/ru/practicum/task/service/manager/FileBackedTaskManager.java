@@ -70,8 +70,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
                     return;
-                }
-                if(line.equals("id,type,name,status,description,epicId")) {
+                } else if (line.equals("id,type,name,status,description,epicId")) {
                     continue;
                 }
                 Task task = fromString(line);
