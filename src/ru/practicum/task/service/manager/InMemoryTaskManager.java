@@ -1,8 +1,9 @@
-package ru.practicum.task.service;
+package ru.practicum.task.service.manager;
 
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.HistoryManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    protected final Map<Integer, Task> tasks = new HashMap<>();
+    protected final Map<Integer, Epic> epics = new HashMap<>();
+    protected final Map<Integer, Subtask> subtasks = new HashMap<>();
 
     private final HistoryManager historyManager;
 

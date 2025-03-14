@@ -10,7 +10,7 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
-    private Subtask(int id, String name, String description, Status status, int epicId) {
+    public Subtask(int id, String name, String description, Status status, int epicId) {
         super(id, name, description, status);
         this.epicId = epicId;
     }
@@ -35,6 +35,11 @@ public class Subtask extends Task {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), epicId);
+    }
+
+    @Override
+    public String toFileString() {
+        return String.format("%s,%s,%s,%s,%s,%s\n", id, Type.SUBTASK, name, status, description, epicId);
     }
 
 }

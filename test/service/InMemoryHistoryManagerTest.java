@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
 import ru.practicum.task.service.*;
-
-import java.util.List;
+import ru.practicum.task.service.manager.ManagerSaveException;
+import ru.practicum.task.service.manager.Managers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -59,5 +59,14 @@ class InMemoryHistoryManagerTest {
         historyManager.clearAllHistory();
 
         assertEquals(0, historyManager.getHistory().size(), "Размер не соответствует действительному");
+    }
+
+    @Test
+    void testHistoryManagerShouldRemainOnlyTheLastView() throws ManagerSaveException {
+        Task task1 = new Task(1,"TASK №1", "DESCRIPTION №1", Status.NEW);
+        historyManager.addInHistory(task1);
+        historyManager.addInHistory(task1);
+
+        assertEquals(1, historyManager.getHistory().size(), "Размер не соответствует действительному");
     }
 }

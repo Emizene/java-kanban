@@ -1,4 +1,4 @@
-package ru.practicum.task.service;
+package ru.practicum.task.service.manager;
 
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;

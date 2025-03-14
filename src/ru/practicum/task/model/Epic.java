@@ -12,7 +12,7 @@ public class Epic extends Task {
         super(name, description, status);
     }
 
-    private Epic(int id, String name, String description, Status status) {
+    public Epic(int id, String name, String description, Status status) {
         super(id, name, description, status);
     }
 
@@ -66,6 +66,11 @@ public class Epic extends Task {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), subtasks);
+    }
+
+    @Override
+    public String toFileString() {
+        return String.format("%s,%s,%s,%s,%s\n", id, Type.EPIC, name, status, description);
     }
 
 }
