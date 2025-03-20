@@ -56,7 +56,7 @@ public class Subtask extends Task {
         if (duration == null) {
             duration = Duration.ofMinutes(0);
         }
-        return String.format("%s,%s,%s,%s,%s,%s\n", id, Type.SUBTASK, name, status, description,
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s\n", id, Type.SUBTASK, name, status, description,
                 epicId, duration.toMinutes(), startTime, getEndTime());
     }
 

@@ -12,7 +12,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EpicTest {
 

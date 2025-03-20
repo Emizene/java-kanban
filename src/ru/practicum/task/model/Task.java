@@ -152,7 +152,7 @@ public class Task {
         if (duration == null) {
             duration = Duration.ofMinutes(0);
         }
-        return String.format("%s,%s,%s,%s,%s\n", id, Type.TASK, name, status, description,
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s\n", id, Type.TASK, name, status, description,
                 duration.toMinutes(), startTime, getEndTime());
     }
 }
