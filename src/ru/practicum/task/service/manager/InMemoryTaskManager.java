@@ -3,19 +3,17 @@ package ru.practicum.task.service.manager;
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
-import ru.practicum.task.service.HistoryManager;
+import ru.practicum.task.service.history.HistoryManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> tasks = new HashMap<>();
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
-
     private final HistoryManager historyManager;
+    final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public InMemoryTaskManager() {
         this.historyManager = Managers.getDefaultHistoryManager();
@@ -35,6 +33,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
+        if(isIntersection(task)) {
+            return;
+        }
         int id = generateId();
         task.setId(id);
         tasks.put(id, task);
@@ -42,6 +43,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addEpic(Epic epic) {
+        if(isIntersection(epic)) {
+            return;
+        }
         int id = generateId();
         epic.setId(id);
         epics.put(id, epic);
@@ -49,6 +53,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addSubtask(Subtask subtask) {
+        if(isIntersection(subtask)) {
+            return;
+        }
         int id = generateId();
         subtask.setId(id);
         subtasks.put(subtask.getId(), subtask);
@@ -114,6 +121,7 @@ public class InMemoryTaskManager implements TaskManager {
                 historyManager.remove(id);
             }
             tasks.clear();
+            prioritizedTasks.removeAll(tasks.values());
         }
     }
 
@@ -124,7 +132,9 @@ public class InMemoryTaskManager implements TaskManager {
                 historyManager.remove(id);
             }
             epics.clear();
+            prioritizedTasks.removeAll(epics.values());
             subtasks.clear();
+            prioritizedTasks.removeAll(subtasks.values());
         }
     }
 
@@ -135,23 +145,28 @@ public class InMemoryTaskManager implements TaskManager {
                 historyManager.remove(id);
             }
             subtasks.clear();
+            prioritizedTasks.removeAll(subtasks.values());
         }
     }
 
     @Override
     public void deleteTask(int taskId) {
         tasks.remove(taskId);
+        prioritizedTasks.remove(tasks.get(taskId));
         historyManager.remove(taskId);
     }
 
     @Override
     public void deleteEpic(int epicId) {
         Epic epic = epics.get(epicId);
-        for (Subtask subtask : epic.getSubtasks()) {
-            subtasks.remove(subtask.getId());
+        if (epic != null) {
+            epic.getSubtasks().stream()
+                    .map(Subtask::getId)
+                    .forEach(subtasks::remove);
+            epics.remove(epicId);
+            prioritizedTasks.remove(epic);
+            historyManager.remove(epicId);
         }
-        epics.remove(epicId);
-        historyManager.remove(epicId);
     }
 
     @Override
@@ -159,6 +174,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(subtaskId);
         epic.getSubtasks().remove(subtasks.get(subtaskId));
         subtasks.remove(subtaskId);
+        prioritizedTasks.remove(subtasks.get(subtaskId));
         historyManager.remove(subtaskId);
         epic.updateStatus();
     }
@@ -175,29 +191,53 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void printAllTasks(TaskManager manager) {
-        System.out.println("Задачи:");
-        for (Task task : manager.getAllTasks()) {
-            System.out.println(task);
-        }
-        System.out.println("Эпики:");
-        for (Epic epic : manager.getAllEpics()) {
-            System.out.println(epic);
-        }
-        System.out.println("Подзадачи:");
-        for (Task subtask : manager.getAllSubtasks()) {
-            System.out.println(subtask);
-        }
+    public Set<Task> getPrioritizedTasks() {
+        List<Task> taskList = tasks.values().stream()
+                .filter(task -> task.getStartTime() != null)
+                .toList();
+        prioritizedTasks.addAll(taskList);
+        List<Epic> epicList = epics.values().stream()
+                .filter(task -> task.getStartTime() != null)
+                .toList();
+        prioritizedTasks.addAll(epicList);
+        List<Subtask> subtaskList = subtasks.values().stream()
+                .filter(task -> task.getStartTime() != null)
+                .toList();
+        prioritizedTasks.addAll(subtaskList);
+        return prioritizedTasks;
+    }
+
+    public boolean isIntersection(Task task) {
+        return getPrioritizedTasks()
+                .stream()
+                .anyMatch(prioritizedTask ->
+                        (task.getStartTime().isAfter(prioritizedTask.getStartTime()) ||
+                                task.getStartTime().isEqual(prioritizedTask.getStartTime())) &&
+                                task.getStartTime().isBefore(prioritizedTask.getEndTime()) ||
+                                task.getEndTime().isEqual(prioritizedTask.getEndTime())
+                );
+    }
+
+    @Override
+    public void printAllTasks() {
+        System.out.println("Задачи, Эпики, подзадачи:");
+        Stream.concat(
+                        Stream.concat(
+                                getAllTasks().stream(),
+                                getAllEpics().stream()
+                        ),
+                        getAllSubtasks().stream()
+                )
+                .forEach(System.out::println);
 
         System.out.println("История:");
         if (getHistory().isEmpty()) {
             System.out.println("История пуста");
-        }
-        for (Task task : manager.getHistory()) {
-            System.out.println(task);
+        } else {
+            getHistory()
+                    .forEach(System.out::println);
         }
     }
-
 }
 
 
