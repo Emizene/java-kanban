@@ -33,7 +33,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        if(isIntersection(task)) {
+        if (isIntersection(task)) {
             return;
         }
         int id = generateId();
@@ -43,7 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addEpic(Epic epic) {
-        if(isIntersection(epic)) {
+        if (isIntersection(epic)) {
             return;
         }
         int id = generateId();
@@ -53,7 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addSubtask(Subtask subtask) {
-        if(isIntersection(subtask)) {
+        if (isIntersection(subtask)) {
             return;
         }
         int id = generateId();
