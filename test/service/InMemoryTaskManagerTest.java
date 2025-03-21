@@ -20,7 +20,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     }
 
     @Test
-    void testOverlappingTasksShouldNotBeAdded() {
+    void testIntersectionTasksShouldNotBeAdded() {
         Task task1 = new Task("TASK №1", "DESCRIPTION №1", Status.NEW, Duration.ofMinutes(10),
                 LocalDateTime.of(2025, 3, 17, 10, 0));
         Task task2 = new Task("TASK №2", "DESCRIPTION №2", Status.NEW, Duration.ofMinutes(0),
@@ -30,6 +30,38 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         manager.addTask(task2);
 
         assertEquals(1, manager.getAllTasks().size(), "Размер не соответствует действительному");
+    }
+
+    @Test
+    void testIntersectionCheckWorkCorrectly() {
+        Task task1 = new Task("TASK №1", "DESCRIPTION №1", Status.NEW, Duration.ofMinutes(30),
+                LocalDateTime.of(2025, 3, 15, 19, 0));
+        Task task2 = new Task("TASK №2", "DESCRIPTION №2", Status.NEW, Duration.ofMinutes(0),
+                LocalDateTime.of(2025, 3, 15, 19, 0));
+        manager.addTask(task1);
+        manager.addTask(task2);
+
+        assertEquals(1, manager.getAllTasks().size(), "Размер не соответствует действительному");
+
+        Epic epic1 = new Epic("EPIC №1", "DESCRIPTION №1", Status.NEW,
+                LocalDateTime.of(2025, 3, 17, 16, 30));
+        manager.addEpic(epic1);
+        Epic epic2 = new Epic("EPIC №2", "DESCRIPTION №2", Status.NEW,
+                LocalDateTime.of(2025, 3, 17, 16, 30));
+        manager.addEpic(epic2);
+
+        Subtask subtask1 = new Subtask("SUBTASK №1 EPIC №1", "DESCRIPTION №1",
+                Status.NEW, epic1.getId(), Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 3, 17, 17, 0));
+        manager.addSubtask(subtask1);
+        Subtask subtask2 = new Subtask("SUBTASK №2 EPIC №1", "DESCRIPTION №2",
+                Status.NEW, epic1.getId(), Duration.ofMinutes(160),
+                LocalDateTime.of(2025, 3, 16, 16, 0));
+        manager.addSubtask(subtask2);
+
+        assertEquals(1, manager.getAllEpics().size(), manager.getAllSubtasks().size(),
+                "Размер не соответствует действительному");
+
     }
 
     @Test
@@ -55,14 +87,14 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @Test
     void testShouldGetCorrectEndTime() {
-        Task task1 = new Task(1,"TASK №1", "DESCRIPTION №1", Status.NEW, Duration.ofMinutes(10),
+        Task task1 = new Task(1, "TASK №1", "DESCRIPTION №1", Status.NEW, Duration.ofMinutes(10),
                 LocalDateTime.of(2025, 3, 17, 10, 0));
-        Epic epic1 = new Epic(2,"EPIC №1", "DESCRIPTION №1", Status.NEW,
+        Epic epic1 = new Epic(2, "EPIC №1", "DESCRIPTION №1", Status.NEW,
                 LocalDateTime.of(2025, 3, 17, 16, 30));
-        Subtask subtask1 = new Subtask(3,"SUBTASK №1 EPIC №1", "DESCRIPTION №1",
+        Subtask subtask1 = new Subtask(3, "SUBTASK №1 EPIC №1", "DESCRIPTION №1",
                 Status.NEW, Duration.ofMinutes(60),
                 LocalDateTime.of(2025, 3, 17, 17, 0), epic1.getId());
-        Subtask subtask2 = new Subtask(4,"SUBTASK №2 EPIC №1 ", "DESCRIPTION №2",
+        Subtask subtask2 = new Subtask(4, "SUBTASK №2 EPIC №1 ", "DESCRIPTION №2",
                 Status.NEW, Duration.ofMinutes(25),
                 LocalDateTime.of(2025, 3, 17, 20, 0), epic1.getId());
         manager.addTask(task1);

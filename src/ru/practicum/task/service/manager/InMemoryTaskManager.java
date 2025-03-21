@@ -207,14 +207,18 @@ public class InMemoryTaskManager implements TaskManager {
         return prioritizedTasks;
     }
 
-    public boolean isIntersection(Task task) {
+    private boolean isIntersection(Task task) {
         return getPrioritizedTasks()
                 .stream()
+                .filter(Objects::nonNull)
+                .filter(prioritizedTask -> prioritizedTask.getStartTime() != null
+                        && prioritizedTask.getEndTime() != null)
                 .anyMatch(prioritizedTask ->
-                        (task.getStartTime().isAfter(prioritizedTask.getStartTime()) ||
-                                task.getStartTime().isEqual(prioritizedTask.getStartTime())) &&
-                                task.getStartTime().isBefore(prioritizedTask.getEndTime()) ||
-                                task.getEndTime().isEqual(prioritizedTask.getEndTime())
+                        (task.getStartTime().isBefore(prioritizedTask.getEndTime()) ||
+                                task.getEndTime().isEqual(prioritizedTask.getEndTime()) &&
+                                task.getStartTime().isAfter(prioritizedTask.getStartTime()) ||
+                                task.getStartTime().isEqual(prioritizedTask.getStartTime()))
+
                 );
     }
 

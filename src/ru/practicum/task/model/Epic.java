@@ -47,15 +47,18 @@ public class Epic extends Task {
 
         startTime = epicSubtasks.stream()
                 .map(Task::getStartTime)
+                .filter(Objects::nonNull)
                 .min(LocalDateTime::compareTo)
                 .orElse(null);
 
         endTime = epicSubtasks.stream()
                 .map(Task::getEndTime)
+                .filter(Objects::nonNull)
                 .max(LocalDateTime::compareTo)
                 .orElse(null);
 
         duration = Duration.ofMinutes(epicSubtasks.stream()
+                .filter(Objects::nonNull)
                 .mapToLong(sub -> sub.getDuration().toMinutes())
                 .sum());
     }

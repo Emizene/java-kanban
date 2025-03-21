@@ -110,6 +110,9 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
+        if (duration == null) {
+            duration = Duration.ofMinutes(0);
+        }
         return startTime.plus(duration);
     }
 
