@@ -3,6 +3,8 @@ package ru.practicum.task.service.manager;
 import ru.practicum.task.model.*;
 
 import java.io.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
@@ -21,15 +23,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private void save() throws ManagerSaveException {
         try (Writer fileWriter = new FileWriter(file)) {
             fileWriter.write("id,type,name,status,description,epicId\n");
-            for (Task task : getAllTasks()) {
-                fileWriter.write(task.toFileString());
-            }
-            for (Epic epic : getAllEpics()) {
-                fileWriter.write(epic.toFileString());
-            }
-            for (Subtask subtask : getAllSubtasks()) {
-                fileWriter.write(subtask.toFileString());
-            }
+            String data = Stream.concat(
+                            Stream.concat(
+                                    getAllTasks().stream(),
+                                    getAllEpics().stream()
+                            ),
+                            getAllSubtasks().stream()
+                    )
+                    .map(Task::toFileString)
+                    .collect(Collectors.joining());
+
+            fileWriter.write(data);
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка записи в файл");
         }

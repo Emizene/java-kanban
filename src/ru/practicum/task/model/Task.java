@@ -1,5 +1,7 @@
 package ru.practicum.task.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -7,15 +9,49 @@ public class Task {
     protected String description;
     protected Status status;
     protected int id;
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
-    public Task(String name, String description, Status status) {
+    public Task(String name, String description, Status status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public Task(Integer id, String name, String description, Status status, Duration duration, LocalDateTime startTime) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public Task(String name, String description, Status status, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+    }
+
+    public Task(Integer id, String name, String description, Status status, LocalDateTime startTime) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+    }
+
+    public Task(Integer id, String name, String description, Status status) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
-    public Task(Integer id, String name, String description, Status status) {
-        this.id = id;
+    public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -57,6 +93,29 @@ public class Task {
         this.id = id;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (duration == null) {
+            duration = Duration.ofMinutes(0);
+        }
+        return startTime.plus(duration);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,17 +131,32 @@ public class Task {
 
     @Override
     public String toString() {
+        if (duration == null || startTime == null) {
+            return this.getClass().getSimpleName() +
+                    "{name='" + name + '\'' +
+                    ", description='" + description + '\'' +
+                    ", status='" + status + '\'' +
+                    ", id='" + id + '\'' +
+                    ", 'time' = no info" +
+                    '}';
+        }
         return this.getClass().getSimpleName() +
                 "{name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status + '\'' +
-                ", id=" + id +
+                ", status='" + status + '\'' +
+                ", id='" + id + '\'' +
+                ", duration='" + duration + '\'' +
+                ", startTime=" + startTime + '\'' +
+                ", endTime=" + getEndTime() +
                 '}';
     }
 
     public String toFileString() {
-        return String.format("%s,%s,%s,%s,%s\n", id, Type.TASK, name, status, description);
+        if (duration == null) {
+            duration = Duration.ofMinutes(0);
+        }
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s\n", id, Type.TASK, name, status, description,
+                duration.toMinutes(), startTime, getEndTime());
     }
-
 }
 

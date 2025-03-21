@@ -5,6 +5,7 @@ import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -48,5 +49,7 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-    void printAllTasks(TaskManager manager);
+    Set<Task> getPrioritizedTasks();
+
+    void printAllTasks();
 }

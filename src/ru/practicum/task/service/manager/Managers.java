@@ -1,7 +1,7 @@
 package ru.practicum.task.service.manager;
 
-import ru.practicum.task.service.HistoryManager;
-import ru.practicum.task.service.InMemoryHistoryManager;
+import ru.practicum.task.service.history.HistoryManager;
+import ru.practicum.task.service.history.InMemoryHistoryManager;
 
 public final class Managers {
 
