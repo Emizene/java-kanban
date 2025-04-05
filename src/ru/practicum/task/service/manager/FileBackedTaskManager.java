@@ -16,6 +16,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private static final int EPIC_ID_POSITION = 4;
 
     public FileBackedTaskManager(File file) throws ManagerSaveException {
+        super(null);
         this.file = file;
         load(file);
     }
@@ -126,8 +127,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateSubtaskStatus(Subtask subtask, Subtask newSubtask) {
-        super.updateSubtaskStatus(subtask, newSubtask);
+    public void updateSubtask(Subtask subtask, Subtask newSubtask) {
+        super.updateSubtask(subtask, newSubtask);
         save();
     }
 
@@ -150,19 +151,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void deleteTask(int taskId) {
+    public void clearAll() {
+        clearAllTasks();
+        clearAllEpics();
+        clearAllEpics();
+        save();
+    }
+
+    @Override
+    public void deleteTask(Integer taskId) {
         super.deleteTask(taskId);
         save();
     }
 
     @Override
-    public void deleteEpic(int epicId) {
+    public void deleteEpic(Integer epicId) {
         super.deleteEpic(epicId);
         save();
     }
 
     @Override
-    public void deleteSubtask(int subtaskId) {
+    public void deleteSubtask(Integer subtaskId) {
         super.deleteSubtask(subtaskId);
         save();
     }

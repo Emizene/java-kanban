@@ -5,11 +5,12 @@ import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface TaskManager {
 
-    int generateId();
+    Integer generateId();
 
     void addTask(Task task);
 
@@ -17,15 +18,23 @@ public interface TaskManager {
 
     void addSubtask(Subtask subtask);
 
-    Task getTaskById(int id);
+    Optional<Task> getTaskById(Integer id);
 
-    Epic getEpicById(int id);
+    Optional<Epic> getEpicById(Integer id);
 
-    Subtask getSubtaskById(int id);
+    Optional<Subtask> getSubtaskById(Integer id);
 
     void updateTask(Task task, Task newTask);
 
+    void updateTask(Task task);
+
     void updateEpic(Epic epic, Epic newEpic);
+
+    void updateEpic(Epic epic);
+
+    void updateSubtask(Subtask subtask, Subtask newSubtask);
+
+    void updateSubtask(Subtask subtask);
 
     List<Task> getAllTasks();
 
@@ -39,13 +48,13 @@ public interface TaskManager {
 
     void clearAllSubtasks();
 
-    void deleteTask(int taskId);
+    void clearAll();
 
-    void deleteEpic(int epicId);
+    void deleteTask(Integer taskId);
 
-    void deleteSubtask(int subtaskId);
+    void deleteEpic(Integer epicId);
 
-    void updateSubtaskStatus(Subtask subtask, Subtask newSubtask);
+    void deleteSubtask(Integer subtaskId);
 
     List<Task> getHistory();
 

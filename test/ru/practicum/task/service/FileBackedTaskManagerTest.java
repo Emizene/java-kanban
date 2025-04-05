@@ -1,22 +1,32 @@
-package service;
+package ru.practicum.task.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
+import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.history.HistoryManager;
+import ru.practicum.task.service.history.InMemoryHistoryManager;
 import ru.practicum.task.service.manager.FileBackedTaskManager;
+import ru.practicum.task.service.manager.InMemoryTaskManager;
 import ru.practicum.task.service.manager.ManagerSaveException;
+import ru.practicum.task.service.manager.TaskManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+public class FileBackedTaskManagerTest {
 
     File temp = File.createTempFile("test", ".csv");
     FileBackedTaskManager manager = new FileBackedTaskManager(temp);
+    HistoryManager historyManager = new InMemoryHistoryManager();
 
     FileBackedTaskManagerTest() throws IOException {
     }
@@ -46,11 +56,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     void test () {
         File file = new File("Not found path" );
         assertThrows(ManagerSaveException.class,() -> new FileBackedTaskManager(file));
-    }
-
-    @Override
-    protected FileBackedTaskManager getDefaultTaskManager() {
-        return new FileBackedTaskManager(temp);
     }
 
 }

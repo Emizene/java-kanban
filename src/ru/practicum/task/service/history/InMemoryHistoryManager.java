@@ -1,9 +1,11 @@
 package ru.practicum.task.service.history;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.task.model.Task;
 
 import java.util.*;
 
+@Component
 public class InMemoryHistoryManager implements HistoryManager {
 
     private final Map<Integer, Node> linkedMap = new HashMap<>();
@@ -46,7 +48,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void addLast(Task task) {
-        Node newNode = new Node(null, task.getTaskCopy(), null);
+        Node newNode = new Node(null, task.makeTaskCopy(), null);
         if (head == null) {
             head = newNode;
         } else {
