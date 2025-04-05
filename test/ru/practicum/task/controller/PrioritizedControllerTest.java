@@ -2,7 +2,6 @@ package ru.practicum.task.controller;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.task.BaseTest;
-import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
 

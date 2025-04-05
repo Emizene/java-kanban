@@ -23,7 +23,7 @@ public class EpicController {
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<Epic> getEpicById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Epic> getEpicById(@PathVariable("id") Integer id) {
         return epicService.getEpicById(id);
     }
 
@@ -34,7 +34,7 @@ public class EpicController {
 
     @PostMapping
     public ResponseEntity<Void> createOrUpdateEpic(@RequestBody Epic epic) {
-    return epicService.createOrUpdateEpic(epic);
+        return epicService.createOrUpdateEpic(epic);
     }
 
     @DeleteMapping("/{id}")

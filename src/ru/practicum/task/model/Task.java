@@ -12,7 +12,8 @@ public class Task {
     protected Duration duration;
     protected LocalDateTime startTime;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(String name, String description, Status status, Duration duration, LocalDateTime startTime) {
         this.name = name;

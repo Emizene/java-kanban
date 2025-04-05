@@ -2,12 +2,10 @@ package ru.practicum.task.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 import ru.practicum.task.BaseTest;
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Subtask;
-import ru.practicum.task.model.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

@@ -11,7 +11,8 @@ public class Epic extends Task {
     protected LocalDateTime endTime = startTime;
     private final List<Subtask> subtasks = new ArrayList<>();
 
-    public Epic() {}
+    public Epic() {
+    }
 
     public Epic(String name, String description, Status status, LocalDateTime startTime) {
         super(name, description, status, startTime);
@@ -22,7 +23,7 @@ public class Epic extends Task {
     }
 
     public Epic(Integer id, String name, String description, Status status, LocalDateTime startTime) {
-       super(id, name, description, status, startTime);
+        super(id, name, description, status, startTime);
     }
 
     public Epic(Integer id, String name, String description, Status status) {

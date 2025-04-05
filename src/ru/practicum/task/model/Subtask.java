@@ -7,7 +7,8 @@ import java.util.Objects;
 public class Subtask extends Task {
     private int epicId;
 
-    public Subtask() {}
+    public Subtask() {
+    }
 
     public Subtask(String name, String description, Status status,
                    Integer epicId, Duration duration, LocalDateTime startTime) {

@@ -7,7 +7,6 @@ import ru.practicum.task.model.Task;
 import ru.practicum.task.service.history.HistoryManager;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 @Component
 public class InMemoryTaskManager implements TaskManager {
@@ -282,26 +281,6 @@ public class InMemoryTaskManager implements TaskManager {
                 );
     }
 
-    @Override
-    public void printAllTasks() {
-        System.out.println("Задачи, Эпики, подзадачи:");
-        Stream.concat(
-                        Stream.concat(
-                                getAllTasks().stream(),
-                                getAllEpics().stream()
-                        ),
-                        getAllSubtasks().stream()
-                )
-                .forEach(System.out::println);
-
-        System.out.println("История:");
-        if (getHistory().isEmpty()) {
-            System.out.println("История пуста");
-        } else {
-            getHistory()
-                    .forEach(System.out::println);
-        }
-    }
 }
 
 

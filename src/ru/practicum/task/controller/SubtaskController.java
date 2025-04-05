@@ -6,7 +6,6 @@ import ru.practicum.task.model.Subtask;
 import ru.practicum.task.service.server.SubtaskService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/subtasks")
