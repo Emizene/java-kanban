@@ -56,6 +56,8 @@ public interface TaskManager {
 
     void deleteSubtask(Integer subtaskId);
 
+    List<Subtask> getEpicSubtasks(Integer id);
+
     List<Task> getHistory();
 
     Set<Task> getPrioritizedTasks();

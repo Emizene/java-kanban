@@ -1,13 +1,14 @@
 package ru.practicum.task.model;
 
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.BaseTest;
+import ru.practicum.task.service.Managers;
+import ru.practicum.task.service.manager.TaskManager;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskTest extends BaseTest {
+class TaskTest {
 
     @Test
     public void testEqualsTrue_whenTaskIdIsTheSame() {
@@ -21,6 +22,7 @@ class TaskTest extends BaseTest {
 
     @Test
     void testShouldNotConflictBetweenManualSetIdAndGeneratedId() {
+        TaskManager taskManager = Managers.getDefaultTaskManager();
         Task task1 = new Task("TEST TASK №1", "DESCRIPTION №1", Status.NEW);
         Task task2 = new Task("TEST TASK №2", "DESCRIPTION №2", Status.NEW);
         task1.setId(999);

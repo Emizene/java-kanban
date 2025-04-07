@@ -2,19 +2,26 @@ package ru.practicum.task.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.BaseTest;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.history.HistoryManager;
+import ru.practicum.task.service.manager.InMemoryTaskManager;
 import ru.practicum.task.service.manager.ManagerSaveException;
+import ru.practicum.task.service.manager.TaskManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class HistoryManagerTest extends BaseTest {
+public abstract class HistoryManagerTest <T extends HistoryManager> {
+    protected abstract T getDefaultHistoryManager();
+
+    protected HistoryManager historyManager;
+    protected TaskManager manager;
 
     @BeforeEach
-    void beforeEach() {
-        historyManager.clearAllHistory();
+    public void beforeEach() {
+        manager = new InMemoryTaskManager();
+        historyManager = getDefaultHistoryManager();
     }
 
     @Test

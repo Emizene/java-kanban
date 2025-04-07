@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Subtask;
 import ru.practicum.task.model.Task;
+import ru.practicum.task.service.Managers;
 import ru.practicum.task.service.history.HistoryManager;
 
 import java.util.*;
@@ -14,11 +15,11 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final HistoryManager historyManager;
-    final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+    private final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     private Integer idCounter = 0;
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
+    public InMemoryTaskManager() {
+        this.historyManager = Managers.getDefaultHistoryManager();
     }
 
     @Override
@@ -193,9 +194,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (tasks.containsKey(task.getId())) {
             deleteTask(task.getId());
             historyManager.remove(task.getId());
-            if (!isIntersection(task)) {
                 tasks.put(task.getId(), task);
-            }
         }
     }
 
@@ -214,12 +213,10 @@ public class InMemoryTaskManager implements TaskManager {
         if (epics.containsKey(epic.getId())) {
             deleteEpic(epic.getId());
             historyManager.remove(epic.getId());
-            if (!isIntersection(epic)) {
                 epics.put(epic.getId(), epic);
                 for (Subtask subtask : epic.getSubtasks()) {
                     subtasks.put(subtask.getId(), subtask);
                 }
-            }
         }
     }
 
@@ -241,11 +238,28 @@ public class InMemoryTaskManager implements TaskManager {
             epics.get(oldSubtask.getEpicId()).getSubtasks().remove(oldSubtask);
             deleteSubtask(subtask.getId());
             historyManager.remove(subtask.getId());
-            if (!isIntersection(subtask)) {
                 epics.get(subtask.getEpicId()).getSubtasks().add(subtask);
                 subtasks.put(subtask.getId(), subtask);
+        }
+    }
+
+    @Override
+    public List<Subtask> getEpicSubtasks(Integer epicId) {
+        Optional<Epic> epic = getEpicById(epicId);
+        if (epic.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Subtask> subtasks = epic.get().getSubtasks();
+        if (subtasks == null || subtasks.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Subtask> epicSubtask = new ArrayList<>();
+        for (Subtask subtask : subtasks) {
+            if (subtask != null) {
+                epicSubtask.add(subtask);
             }
         }
+        return epicSubtask;
     }
 
     @Override

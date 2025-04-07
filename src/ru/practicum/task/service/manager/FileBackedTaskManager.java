@@ -16,7 +16,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private static final int EPIC_ID_POSITION = 4;
 
     public FileBackedTaskManager(File file) throws ManagerSaveException {
-        super(null);
         this.file = file;
         load(file);
     }

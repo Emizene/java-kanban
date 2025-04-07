@@ -1,8 +1,6 @@
 package ru.practicum.task.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.BaseTest;
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Subtask;
@@ -14,11 +12,11 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest extends BaseTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
-    @BeforeEach
-    void beforeEach() {
-        taskManager = new InMemoryTaskManager(historyManager);
+    @Override
+    protected InMemoryTaskManager getDefaultTaskManager() {
+        return new InMemoryTaskManager();
     }
 
     @Test
@@ -28,10 +26,10 @@ class InMemoryTaskManagerTest extends BaseTest {
         Task task2 = new Task("TASK №2", "DESCRIPTION №2", Status.NEW, Duration.ofMinutes(0),
                 LocalDateTime.of(2025, 3, 17, 10, 0));
 
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        manager.addTask(task1);
+        manager.addTask(task2);
 
-        assertEquals(1, taskManager.getAllTasks().size(), "Размер не соответствует действительному");
+        assertEquals(1, manager.getAllTasks().size(), "Размер не соответствует действительному");
     }
 
     @Test
@@ -40,10 +38,10 @@ class InMemoryTaskManagerTest extends BaseTest {
                 LocalDateTime.of(2025, 3, 15, 19, 0));
         Task task2 = new Task(2, "TASK №2", "DESCRIPTION №2", Status.NEW, Duration.ofMinutes(0),
                 LocalDateTime.of(2025, 3, 15, 19, 0));
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        manager.addTask(task1);
+        manager.addTask(task2);
 
-        assertEquals(1, taskManager.getAllTasks().size(), "Размер не соответствует действительному");
+        assertEquals(1, manager.getAllTasks().size(), "Размер не соответствует действительному");
 
         Epic epic1 = new Epic(3, "EPIC №1", "DESCRIPTION №1", Status.NEW,
                 LocalDateTime.of(2025, 3, 17, 16, 30));
@@ -58,12 +56,12 @@ class InMemoryTaskManagerTest extends BaseTest {
                 16, 16, 0), epic2.getId());
         epic1.addSubtask(subtask1);
         epic2.addSubtask(subtask2);
-        taskManager.addEpic(epic1);
-        taskManager.addEpic(epic2);
-        taskManager.addSubtask(subtask1);
-        taskManager.addSubtask(subtask2);
+        manager.addEpic(epic1);
+        manager.addEpic(epic2);
+        manager.addSubtask(subtask1);
+        manager.addSubtask(subtask2);
 
-        assertEquals(1, taskManager.getAllEpics().size(), taskManager.getAllSubtasks().size(),
+        assertEquals(1, manager.getAllEpics().size(), manager.getAllSubtasks().size(),
                 "Размер не соответствует действительному");
 
     }
@@ -75,17 +73,17 @@ class InMemoryTaskManagerTest extends BaseTest {
         Subtask subtask1 = new Subtask(3, "SUBTASK №1 EPIC №1", "DESCRIPTION №1",
                 Status.NEW, Duration.ofMinutes(60),
                 LocalDateTime.of(2025, 3, 17, 17, 0), epic1.getId());
-        taskManager.addEpic(epic1);
-        taskManager.addSubtask(subtask1);
+        manager.addEpic(epic1);
+        manager.addSubtask(subtask1);
 
-        assertEquals(60, taskManager.getAllEpics().getFirst().getDuration().toMinutes());
+        assertEquals(60, manager.getAllEpics().getFirst().getDuration().toMinutes());
 
         Subtask subtask2 = new Subtask(4, "SUBTASK №2 EPIC №1 ", "DESCRIPTION №2",
                 Status.NEW, Duration.ofMinutes(25),
                 LocalDateTime.of(2025, 3, 17, 20, 0), epic1.getId());
-        taskManager.addSubtask(subtask2);
+        manager.addSubtask(subtask2);
 
-        assertEquals(85, taskManager.getAllEpics().getFirst().getDuration().toMinutes());
+        assertEquals(85, manager.getAllEpics().getFirst().getDuration().toMinutes());
     }
 
     @Test
@@ -102,10 +100,10 @@ class InMemoryTaskManagerTest extends BaseTest {
                 17, 20, 0), epic1.getId());
         epic1.addSubtask(subtask1);
         epic1.addSubtask(subtask2);
-        taskManager.addTask(task1);
-        taskManager.addEpic(epic1);
-        taskManager.addSubtask(subtask1);
-        taskManager.addSubtask(subtask2);
+        manager.addTask(task1);
+        manager.addEpic(epic1);
+        manager.addSubtask(subtask1);
+        manager.addSubtask(subtask2);
 
         assertEquals(task1.getEndTime(), LocalDateTime.of(2025, 3, 17, 10, 10));
         assertEquals(epic1.getEndTime(), LocalDateTime.of(2025, 3, 17, 20, 25));

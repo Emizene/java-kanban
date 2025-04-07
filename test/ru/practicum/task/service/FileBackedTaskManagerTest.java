@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileBackedTaskManagerTest {
+public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     File temp = File.createTempFile("test", ".csv");
     FileBackedTaskManager manager = new FileBackedTaskManager(temp);
@@ -46,6 +46,11 @@ public class FileBackedTaskManagerTest {
     void test() {
         File file = new File("Not found path");
         assertThrows(ManagerSaveException.class, () -> new FileBackedTaskManager(file));
+    }
+
+    @Override
+    protected FileBackedTaskManager getDefaultTaskManager() {
+        return new FileBackedTaskManager(temp);
     }
 
 }

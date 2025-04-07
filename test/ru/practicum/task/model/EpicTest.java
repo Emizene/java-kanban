@@ -1,14 +1,23 @@
 package ru.practicum.task.model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.BaseTest;
+import ru.practicum.task.service.manager.InMemoryTaskManager;
+import ru.practicum.task.service.manager.TaskManager;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class EpicTest extends BaseTest {
+class EpicTest {
+
+    protected TaskManager manager;
+
+    @BeforeEach
+    public void beforeEach() {
+        manager = new InMemoryTaskManager();
+    }
 
     @Test
     public void testEqualsTrue_whenEpicIdIsTheSame() {
@@ -26,19 +35,19 @@ class EpicTest extends BaseTest {
     public void testEpicStatusShouldBeUpdate() {
         Epic epic1 = new Epic("EPIC №1", "DESCRIPTION №1", Status.NEW,
                 LocalDateTime.of(2025, 3, 17, 16, 30));
-        taskManager.addEpic(epic1);
+        manager.addEpic(epic1);
         Subtask subtask1 = new Subtask("SUBTASK №1 EPIC №1", "DESCRIPTION №1",
                 Status.IN_PROGRESS, epic1.getId(), Duration.ofMinutes(5),
                 LocalDateTime.of(2025, 3, 17, 17, 0));
-        taskManager.addSubtask(subtask1);
+        manager.addSubtask(subtask1);
 
         assertEquals(Status.IN_PROGRESS, epic1.getStatus());
 
         Subtask subtask2 = new Subtask("SUBTASK №2 EPIC №2 ", "DESCRIPTION №2",
                 Status.DONE, epic1.getId(), Duration.ofMinutes(12),
                 LocalDateTime.of(2025, 3, 19, 20, 0));
-        taskManager.addSubtask(subtask2);
-        taskManager.updateSubtask(subtask1, subtask2);
+        manager.addSubtask(subtask2);
+        manager.updateSubtask(subtask1, subtask2);
 
         assertEquals(Status.DONE, epic1.getStatus());
     }
