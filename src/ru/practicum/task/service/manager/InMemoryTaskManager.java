@@ -33,9 +33,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task) throws IntersectionException {
         if (isIntersection(task)) {
-            return;
+            throw new IntersectionException("Задачи пересекаются");
         }
         if (task.getId() == null) {
             Integer id = generateId();
@@ -45,12 +45,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addEpic(Epic epic) {
+    public void addEpic(Epic epic) throws IntersectionException {
         if (epic == null || epics.containsKey(epic.getId())) {
             return;
         }
         if (isIntersection(epic)) {
-            return;
+            throw new IntersectionException("Эпики пересекаются");
         }
         if (epic.getId() == null) {
             Integer id = generateId();
@@ -60,12 +60,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addSubtask(Subtask subtask) {
+    public void addSubtask(Subtask subtask) throws IntersectionException {
         if (subtask == null || !epics.containsKey(subtask.getEpicId())) {
             return;
         }
         if (isIntersection(subtask)) {
-            return;
+            throw new IntersectionException("Сабтаски пересекаются");
         }
         if (subtask.getId() == null) {
             Integer id = generateId();

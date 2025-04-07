@@ -30,7 +30,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             case GET_BY_ID -> getTaskById(exchange, getId(path));
             case POST -> createOrUpdateTask(exchange);
             case DELETE_BY_ID -> deleteTask(exchange, getId(path));
-            case UNKNOWN -> sendBadRequest(exchange);
+            case UNKNOWN -> sendNotAcceptable(exchange);
         }
     }
 
@@ -99,10 +99,10 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             } catch (IntersectionException e) {
                 sendHasInteractions(exchange);
             } catch (IllegalArgumentException e) {
-                sendBadRequest(exchange);
+                sendNotAcceptable(exchange);
             }
         } catch (JsonSyntaxException e) {
-            sendBadRequest(exchange);
+            sendNotAcceptable(exchange);
         }
     }
 

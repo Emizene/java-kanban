@@ -37,7 +37,7 @@ public abstract class BaseHttpHandler {
         writeResponse(exchange, "Задача не найдена", 404);
     }
 
-    protected void sendBadRequest(HttpExchange exchange) throws IOException {
+    protected void sendNotAcceptable(HttpExchange exchange) throws IOException {
         writeResponse(exchange, "Неверные данные", 406);
     }
 

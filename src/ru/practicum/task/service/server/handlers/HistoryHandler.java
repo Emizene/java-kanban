@@ -21,7 +21,7 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
         Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod());
         switch (endpoint) {
             case GET_HISTORY -> getHistory(exchange);
-            case UNKNOWN -> sendBadRequest(exchange);
+            case UNKNOWN -> sendNotAcceptable(exchange);
         }
     }
 

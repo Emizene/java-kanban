@@ -21,7 +21,7 @@ public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
         Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod());
         switch (endpoint) {
             case GET_PRIORITIZED -> getPrioritizedTasks(exchange);
-            case UNKNOWN -> sendBadRequest(exchange);
+            case UNKNOWN -> sendNotAcceptable(exchange);
         }
     }
 

@@ -30,7 +30,7 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
             case GET_BY_ID -> getSubtaskById(exchange, getId(path));
             case POST -> createOrUpdateSubtask(exchange);
             case DELETE_BY_ID -> deleteSubtask(exchange, getId(path));
-            case UNKNOWN -> sendBadRequest(exchange);
+            case UNKNOWN -> sendNotAcceptable(exchange);
         }
     }
 
@@ -97,12 +97,12 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
                     writeResponse(exchange, "Задача успешно обновлена", 201);
                 }
             } catch (IllegalArgumentException e) {
-                sendBadRequest(exchange);
+                sendNotAcceptable(exchange);
             } catch (IntersectionException e) {
                 sendHasInteractions(exchange);
             }
         } catch (JsonSyntaxException e) {
-            sendBadRequest(exchange);
+            sendNotAcceptable(exchange);
         }
     }
 

@@ -151,9 +151,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public void clearAll() {
-        clearAllTasks();
-        clearAllEpics();
-        clearAllEpics();
+        super.clearAll();
         save();
     }
 

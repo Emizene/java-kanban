@@ -31,7 +31,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
             case GET_EPIC_SUBTASKS_BY_ID -> getEpicSubtasks(exchange, getId(path));
             case POST -> createOrUpdateEpic(exchange);
             case DELETE_BY_ID -> deleteEpic(exchange, getId(path));
-            case UNKNOWN -> sendBadRequest(exchange);
+            case UNKNOWN -> sendNotAcceptable(exchange);
         }
     }
 
@@ -115,12 +115,12 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
                     writeResponse(exchange, "Задача успешно обновлена", 201);
                 }
             } catch (IllegalArgumentException e) {
-                sendBadRequest(exchange);
+                sendNotAcceptable(exchange);
             } catch (IntersectionException e) {
                 sendHasInteractions(exchange);
             }
         } catch (JsonSyntaxException e) {
-            sendBadRequest(exchange);
+            sendNotAcceptable(exchange);
         }
     }
 
