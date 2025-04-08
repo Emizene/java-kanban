@@ -11,6 +11,9 @@ public class Epic extends Task {
     protected LocalDateTime endTime = startTime;
     private final List<Subtask> subtasks = new ArrayList<>();
 
+    public Epic() {
+    }
+
     public Epic(String name, String description, Status status, LocalDateTime startTime) {
         super(name, description, status, startTime);
     }
@@ -20,14 +23,14 @@ public class Epic extends Task {
     }
 
     public Epic(Integer id, String name, String description, Status status, LocalDateTime startTime) {
-       super(id, name, description, status, startTime);
+        super(id, name, description, status, startTime);
     }
 
-    public Epic(int id, String name, String description, Status status) {
+    public Epic(Integer id, String name, String description, Status status) {
         super(id, name, description, status);
     }
 
-    public Epic getEpicCopy() {
+    public Epic makeEpicCopy() {
         return new Epic(this.getId(), this.getName(), this.getDescription(), this.getStatus());
     }
 
@@ -35,14 +38,26 @@ public class Epic extends Task {
         this.endTime = endTime;
     }
 
+    @Override
+    public Duration getDuration() {
+        return Duration.ofMinutes(subtasks.stream()
+                .filter(Objects::nonNull)
+                .mapToLong(sub -> sub.getDuration().toMinutes())
+                .sum());
+    }
+
     public LocalDateTime getEndTime() {
-        return endTime;
+        return subtasks.stream()
+                .map(Task::getEndTime)
+                .filter(Objects::nonNull)
+                .max(LocalDateTime::compareTo)
+                .orElse(startTime);
     }
 
     public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
         List<Subtask> epicSubtasks = subtasks.stream()
-                .filter(sub -> sub.getEpicId() == id)
+                .filter(sub -> Objects.equals(sub.getEpicId(), id))
                 .toList();
 
         startTime = epicSubtasks.stream()

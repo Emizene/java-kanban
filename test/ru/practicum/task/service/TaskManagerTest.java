@@ -1,4 +1,4 @@
-package service;
+package ru.practicum.task.service;
 
 import ru.practicum.task.model.Epic;
 import ru.practicum.task.model.Status;
@@ -12,6 +12,7 @@ import ru.practicum.task.service.manager.TaskManager;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,10 +35,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 LocalDateTime.of(2025, 3, 17, 10, 0));
         manager.addTask(task1);
 
-        Task retrievedTask1 = manager.getTaskById(task1.getId());
+        Optional<Task> retrievedTask1 = manager.getTaskById(task1.getId());
 
-        assertNotNull(retrievedTask1, "Задача не должна возвращать null");
-        assertEquals(task1, retrievedTask1, "Извлеченная задача не соответствует добавленной");
+        assertNotNull(retrievedTask1.get(), "Задача не должна возвращать null");
+        assertEquals(task1, retrievedTask1.get(), "Извлеченная задача не соответствует добавленной");
     }
 
     @Test
@@ -46,10 +47,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 LocalDateTime.of(2025, 3, 17, 16, 30));
         manager.addEpic(epic1);
 
-        Epic retrievedEpic1 = manager.getEpicById(epic1.getId());
+        Optional<Epic> retrievedEpic1 = manager.getEpicById(epic1.getId());
 
-        assertNotNull(retrievedEpic1, "Эпик не должен возвращать null");
-        assertEquals(epic1, retrievedEpic1, "Извлеченный эпик не соответствует добавленному");
+        assertNotNull(retrievedEpic1.get(), "Эпик не должен возвращать null");
+        assertEquals(epic1, retrievedEpic1.get(), "Извлеченный эпик не соответствует добавленному");
     }
 
     @Test
@@ -63,10 +64,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 LocalDateTime.of(2025, 3, 17, 17, 0));
         manager.addSubtask(subtask1);
 
-        Subtask retrievedSubtask1 = manager.getSubtaskById(subtask1.getId());
+        Optional<Subtask> retrievedSubtask1 = manager.getSubtaskById(subtask1.getId());
 
-        assertNotNull(retrievedSubtask1, "Подзадача не должна возвращать null");
-        assertEquals(subtask1, retrievedSubtask1, "Извлеченная подзадача не соответствует добавленной");
+        assertNotNull(retrievedSubtask1.get(), "Подзадача не должна возвращать null");
+        assertEquals(subtask1, retrievedSubtask1.get(), "Извлеченная подзадача не соответствует добавленной");
     }
 
     @Test
@@ -75,12 +76,12 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 LocalDateTime.of(2025, 3, 17, 10, 0));
 
         manager.addTask(task1);
-        Task retrievedTask = manager.getTaskById(task1.getId());
+        Optional<Task> retrievedTask = manager.getTaskById(task1.getId());
 
-        assertEquals(task1.getName(), retrievedTask.getName(), "Название не должно изменяться");
-        assertEquals(task1.getDescription(), retrievedTask.getDescription(), "Описание не должно изменяться");
-        assertEquals(task1.getStatus(), retrievedTask.getStatus(), "Статус не должен изменяться");
-        assertEquals(task1.getId(), retrievedTask.getId(), "ID не должен изменяться");
+        assertEquals(task1.getName(), retrievedTask.get().getName(), "Название не должно изменяться");
+        assertEquals(task1.getDescription(), retrievedTask.get().getDescription(), "Описание не должно изменяться");
+        assertEquals(task1.getStatus(), retrievedTask.get().getStatus(), "Статус не должен изменяться");
+        assertEquals(task1.getId(), retrievedTask.get().getId(), "ID не должен изменяться");
     }
 
     @Test

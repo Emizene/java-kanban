@@ -1,10 +1,10 @@
-package model;
+package ru.practicum.task.model;
 
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.model.Status;
-import ru.practicum.task.model.Task;
-import ru.practicum.task.service.manager.Managers;
+import ru.practicum.task.service.Managers;
 import ru.practicum.task.service.manager.TaskManager;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,15 +22,15 @@ class TaskTest {
 
     @Test
     void testShouldNotConflictBetweenManualSetIdAndGeneratedId() {
-        TaskManager manager = Managers.getDefaultTaskManager();
+        TaskManager taskManager = Managers.getDefaultTaskManager();
         Task task1 = new Task("TEST TASK №1", "DESCRIPTION №1", Status.NEW);
         Task task2 = new Task("TEST TASK №2", "DESCRIPTION №2", Status.NEW);
         task1.setId(999);
-        manager.addTask(task1);
-        manager.addTask(task2);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
 
-        Task manualSetId = manager.getTaskById(task1.getId());
-        Task generatedId = manager.getTaskById(task2.getId());
+        Optional<Task> manualSetId = taskManager.getTaskById(task1.getId());
+        Optional<Task> generatedId = taskManager.getTaskById(task2.getId());
 
         assertNotNull(task1, "Задача с заданным ID не должна возвращать null");
         assertNotNull(task2, "Задача со сгенерированным ID не должна возвращать null");

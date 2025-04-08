@@ -1,4 +1,4 @@
-package service;
+package ru.practicum.task.service;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
@@ -43,9 +43,9 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     }
 
     @Test
-    void test () {
-        File file = new File("Not found path" );
-        assertThrows(ManagerSaveException.class,() -> new FileBackedTaskManager(file));
+    void test() {
+        File file = new File("Not found path");
+        assertThrows(ManagerSaveException.class, () -> new FileBackedTaskManager(file));
     }
 
     @Override

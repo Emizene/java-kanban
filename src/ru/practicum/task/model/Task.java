@@ -5,12 +5,15 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
+    protected Integer id;
     protected String name;
     protected String description;
     protected Status status;
-    protected int id;
     protected Duration duration;
     protected LocalDateTime startTime;
+
+    public Task() {
+    }
 
     public Task(String name, String description, Status status, Duration duration, LocalDateTime startTime) {
         this.name = name;
@@ -57,8 +60,8 @@ public class Task {
         this.status = status;
     }
 
-    public Task getTaskCopy() {
-        return new Task(this.getId(), this.getName(), this.getDescription(), this.getStatus());
+    public Task makeTaskCopy() {
+        return new Task(this.getId(), this.getName(), this.getDescription(), this.getStatus(), this.getStartTime());
     }
 
     public String getName() {
@@ -85,11 +88,11 @@ public class Task {
         this.status = status;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -121,7 +124,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id;
+        return Objects.equals(id, task.id);
     }
 
     @Override

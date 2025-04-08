@@ -1,10 +1,9 @@
-package service;
+package ru.practicum.task.service;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.task.model.Status;
 import ru.practicum.task.model.Task;
 import ru.practicum.task.service.history.HistoryManager;
-import ru.practicum.task.service.manager.Managers;
 import ru.practicum.task.service.manager.TaskManager;
 
 import java.util.List;

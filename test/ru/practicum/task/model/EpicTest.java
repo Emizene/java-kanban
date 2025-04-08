@@ -1,10 +1,7 @@
-package model;
+package ru.practicum.task.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.task.model.Epic;
-import ru.practicum.task.model.Status;
-import ru.practicum.task.model.Subtask;
 import ru.practicum.task.service.manager.InMemoryTaskManager;
 import ru.practicum.task.service.manager.TaskManager;
 
@@ -50,7 +47,7 @@ class EpicTest {
                 Status.DONE, epic1.getId(), Duration.ofMinutes(12),
                 LocalDateTime.of(2025, 3, 19, 20, 0));
         manager.addSubtask(subtask2);
-        manager.updateSubtaskStatus(subtask1, subtask2);
+        manager.updateSubtask(subtask1, subtask2);
 
         assertEquals(Status.DONE, epic1.getStatus());
     }
@@ -58,8 +55,10 @@ class EpicTest {
     @Test
     public void testEqualsTrue_whenEpicCannotBecomeItIsOwnSubtask() {
         //Epic epic1 = new Epic("TEST EPIC №1", "DESCRIPTION №1", Status.NEW);
-        //java: incompatible types: ru.practicum.task.model.Epic cannot be converted to ru.practicum.task.model.Subtask
-        //В Epic нельзя добавить самого себя в качестве Subtask, так как метод addSubtask принимает только тип Subtask
+        //java: incompatible types: ru.practicum.task.ru.practicum.task.model.Epic cannot be converted
+        // to ru.practicum.task.ru.practicum.task.model.Subtask
+        //В Epic нельзя добавить самого себя в качестве Subtask,
+        // так как метод addSubtask принимает только тип Subtask
         //epic1.addSubtask(epic1);
     }
 
